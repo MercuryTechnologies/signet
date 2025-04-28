@@ -1,0 +1,103 @@
+name: CI
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  release:
+    types:
+      - created
+jobs:
+  cabal:
+    name: Cabal
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cabal check
+  gild:
+    name: Gild
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: tfausak/cabal-gild-setup-action@v2
+      - run: cabal-gild --input signet.cabal --mode check
+  hlint:
+    name: HLint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: haskell-actions/hlint-setup@v2
+      - uses: haskell-actions/hlint-run@v2
+        with:
+          fail-on: status
+  ormolu:
+    name: Ormolu
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: haskell-actions/run-ormolu@v17
+  build:
+    name: GHC ${{ matrix.ghc }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - ghc: 9.12
+            os: macos-latest
+          - ghc: 9.8
+            os: ubuntu-latest
+          - ghc: '9.10'
+            os: ubuntu-latest
+          - ghc: 9.12
+            os: ubuntu-latest
+          - ghc: 9.12
+            os: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: mkdir artifact
+      - uses: haskell/ghcup-setup@v1
+        with:
+          ghc: ${{ matrix.ghc }}
+          cabal: latest
+      - run: ghc-pkg list
+      - run: cabal sdist --output-dir artifact
+      - run: cabal configure --enable-tests --flags=pedantic --jobs
+      - run: cat cabal.project.local
+      - run: cp cabal.project.local artifact
+      - run: cabal update
+      - run: cabal freeze
+      - run: cat cabal.project.freeze
+      - run: cp cabal.project.freeze artifact
+      - run: cabal outdated --v2-freeze-file
+      - uses: actions/cache@v4
+        with:
+          key: ${{ matrix.os }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
+          path: ~/.local/state/cabal
+          restore-keys: ${{ matrix.os }}-${{ matrix.ghc }}-
+      - run: cabal build --only-download
+      - run: cabal build --only-dependencies
+      - run: cabal build
+      - run: tar --create --file artifact.tar --verbose artifact
+      - uses: actions/upload-artifact@v4
+        with:
+          name: signet-${{ github.sha }}-${{ matrix.os }}-${{ matrix.ghc }}
+          path: artifact.tar
+      - run: cabal run -- signet-test-suite
+  release:
+    if: ${{ github.event_name == 'release' }}
+    name: Release
+    needs: build
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: signet-${{ github.sha }}-ubuntu-latest-9.12
+      - run: tar --extract --file artifact.tar --verbose
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: artifact/signet-${{ github.event.release.tag_name }}.tar.gz
+      - run: cabal upload --publish --username '${{ secrets.HACKAGE_USERNAME }}' --password '${{ secrets.HACKAGE_PASSWORD }}' artifact/signet-${{ github.event.release.tag_name }}.tar.gz
