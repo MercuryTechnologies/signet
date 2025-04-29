@@ -1,6 +1,6 @@
 cabal-version: 3.0
 name: signet
-version: 0.2025.4.21
+version: 0.2025.4.28
 synopsis: Standard Webhooks
 description:
   Signet is a Haskell library for working with Standard Webhooks.
@@ -9,6 +9,9 @@ category: Web
 license: 0BSD
 license-file: LICENSE.txt
 maintainer: Mercury Technologies, Inc.
+extra-doc-files:
+  CHANGELOG.md
+  README.md
 
 source-repository head
   location: https://github.com/MercuryTechnologies/signet
@@ -19,7 +22,7 @@ flag pedantic
   manual: True
 
 common library
-  build-depends: base ^>=4.18.2.1
+  build-depends: base ^>=4.19 || ^>=4.20 || ^>=4.21
   default-language: Haskell2010
   ghc-options:
     -Weverything
@@ -45,7 +48,7 @@ common executable
 
 common dependencies
   build-depends:
-    bytestring ^>=0.11.5.3,
+    bytestring ^>=0.12,
     case-insensitive ^>=1.2.1.0,
     crypton ^>=1.0.4,
     exceptions ^>=0.10.7,
@@ -56,7 +59,7 @@ library unstable
   import: library, dependencies
   build-depends:
     http-types ^>=0.12.4,
-    text ^>=2.0.2,
+    text ^>=2.0 || ^>=2.1,
 
   -- cabal-gild: discover source/libraries/unstable
   exposed-modules:
