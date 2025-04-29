@@ -23,7 +23,7 @@ module Signet
     Signet.Unstable.Type.PublicKey.PublicKey (..),
     Signet.Unstable.Type.Secret.Secret (..),
     Signet.Unstable.Type.SecretKey.SecretKey (..),
-    Signet.Unstable.Type.Signature.Signature (..),
+    Signet.Unstable.Type.Signature.Signature (Signet.Unstable.AsymmetricSignature, Signet.Unstable.SymmetricSignature),
     Signet.Unstable.Type.Signatures.Signatures (..),
     Signet.Unstable.parseSignatures,
     Signet.Unstable.Type.Signer.Signer (Signet.Unstable.AsymmetricSigner, Signet.Unstable.SymmetricSigner),

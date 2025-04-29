@@ -182,3 +182,13 @@ pattern SymmetricSigner :: Secret.Secret -> Signer.Signer
 pattern SymmetricSigner secret = Signer.Symmetric secret
 
 {-# COMPLETE AsymmetricSigner, SymmetricSigner #-}
+
+-- | Alias for 'Signature.Asymmetric'.
+pattern AsymmetricSignature :: Signature.Signature -> Signature.Signature
+pattern AsymmetricSignature signature = signature
+
+-- | Alias for 'Signature.Symmetric'.
+pattern SymmetricSignature :: Signature.Signature -> Signature.Signature
+pattern SymmetricSignature signature = signature
+
+{-# COMPLETE AsymmetricSignature, SymmetricSignature #-}
