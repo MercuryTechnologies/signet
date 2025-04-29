@@ -50,7 +50,7 @@ common dependencies
   build-depends:
     bytestring ^>=0.12,
     case-insensitive ^>=1.2.1.0,
-    crypton ^>=1.0.4,
+    crypton ^>=0.34 || ^>=1.0.4,
     exceptions ^>=0.10.7,
     memory ^>=0.18.0,
     time ^>=1.12.2,
@@ -110,7 +110,7 @@ library test
   import: library, dependencies
   build-depends:
     signet:unstable,
-    tasty ^>=1.5.3,
+    tasty ^>=1.4 || ^>=1.5.3,
     tasty-hunit ^>=0.10.2,
     transformers ^>=0.6.1.0,
 
