@@ -17,6 +17,7 @@ import qualified Signet.Unstable.Exception.InvalidTimestamp as InvalidTimestamp
 import qualified Signet.Unstable.Exception.InvalidVerifier as InvalidVerifier
 import qualified Signet.Unstable.Exception.SignetException as SignetException
 import qualified Signet.Unstable.Extra.Either as Either
+import qualified Signet.Unstable.Type.AsymmetricSignature as AsymmetricSignature
 import qualified Signet.Unstable.Type.Id as Id
 import qualified Signet.Unstable.Type.Message as Message
 import qualified Signet.Unstable.Type.Payload as Payload
@@ -26,6 +27,7 @@ import qualified Signet.Unstable.Type.SecretKey as SecretKey
 import qualified Signet.Unstable.Type.Signature as Signature
 import qualified Signet.Unstable.Type.Signatures as Signatures
 import qualified Signet.Unstable.Type.Signer as Signer
+import qualified Signet.Unstable.Type.SymmetricSignature as SymmetricSignature
 import qualified Signet.Unstable.Type.Timestamp as Timestamp
 import qualified Signet.Unstable.Type.Tolerance as Tolerance
 import qualified Signet.Unstable.Type.UnknownSignature as UnknownSignature
@@ -184,11 +186,11 @@ pattern SymmetricSigner secret = Signer.Symmetric secret
 {-# COMPLETE AsymmetricSigner, SymmetricSigner #-}
 
 -- | Alias for 'Signature.Asymmetric'.
-pattern AsymmetricSignature :: Signature.Signature -> Signature.Signature
-pattern AsymmetricSignature signature = signature
+pattern AsymmetricSignature :: AsymmetricSignature.AsymmetricSignature -> Signature.Signature
+pattern AsymmetricSignature asymmetricSignature = Signature.Asymmetric asymmetricSignature
 
 -- | Alias for 'Signature.Symmetric'.
-pattern SymmetricSignature :: Signature.Signature -> Signature.Signature
-pattern SymmetricSignature signature = signature
+pattern SymmetricSignature :: SymmetricSignature.SymmetricSignature -> Signature.Signature
+pattern SymmetricSignature symmetricSignature = Signature.Symmetric symmetricSignature
 
 {-# COMPLETE AsymmetricSignature, SymmetricSignature #-}
