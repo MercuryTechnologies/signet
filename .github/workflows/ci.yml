@@ -100,4 +100,4 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           files: artifact/signet-${{ github.event.release.tag_name }}.tar.gz
-      - run: cabal upload --publish --username '${{ secrets.HACKAGE_USERNAME }}' --password '${{ secrets.HACKAGE_PASSWORD }}' artifact/signet-${{ github.event.release.tag_name }}.tar.gz
+      - run: cabal upload --publish --token '${{ secrets.HACKAGE_TOKEN }}' artifact/signet-${{ github.event.release.tag_name }}.tar.gz
