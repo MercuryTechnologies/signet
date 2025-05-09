@@ -98,6 +98,7 @@ library unstable
     Signet.Unstable.Type.Verifier
 
   hs-source-dirs: source/libraries/unstable
+  visibility: public
 
 library
   import: library
@@ -153,6 +154,7 @@ library test
     SignetTest
 
   hs-source-dirs: source/libraries/test
+  visibility: public
 
 test-suite signet-test-suite
   import: executable
