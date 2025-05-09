@@ -10,6 +10,7 @@ pkgs.haskell.packages.ghc98.developPackage {
       [
         cabal-install
         cabal-gild
+        haskell-language-server
         hlint
         ormolu
       ]
