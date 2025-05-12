@@ -1,7 +1,7 @@
 module Signet.Unstable.Exception.InvalidSecretKeyTest where
 
-import qualified Signet.Unstable.Extra.Tasty as Tasty
+import qualified Signet.Unstable.Type.Test as Test
 
-spec :: Tasty.Spec
-spec = Tasty.describe "Signet.Unstable.Exception.InvalidSecretKey" $ do
+spec :: (Monad tree) => Test.Test tree -> tree ()
+spec test = Test.describe test "Signet.Unstable.Exception.InvalidSecretKey" $ do
   pure ()

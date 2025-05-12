@@ -4,24 +4,23 @@ import qualified Crypto.Hash as Hash
 import qualified Data.ByteString as ByteString
 import qualified Data.ByteString.Char8 as Ascii
 import qualified Signet.Unstable.Exception.InvalidSymmetricSignature as InvalidSymmetricSignature
-import qualified Signet.Unstable.Extra.Tasty as Tasty
+import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.SymmetricSignature as SymmetricSignature
-import Test.Tasty.HUnit ((@?=))
 
-spec :: Tasty.Spec
-spec = Tasty.describe "Signet.Unstable.Type.SymmetricSignature" $ do
-  Tasty.describe "parse" $ do
-    Tasty.it "fails with invalid symmetric signature" $ do
+spec :: (Monad tree) => Test.Test tree -> tree ()
+spec test = Test.describe test "Signet.Unstable.Type.SymmetricSignature" $ do
+  Test.describe test "parse" $ do
+    Test.it test "fails with invalid symmetric signature" $ do
       let byteString = Ascii.pack "invalid"
       let result = SymmetricSignature.parse byteString
-      result @?= Left (InvalidSymmetricSignature.MkInvalidSymmetricSignature byteString)
+      Test.assertEq test result (Left (InvalidSymmetricSignature.MkInvalidSymmetricSignature byteString))
 
-    Tasty.it "succeeds with valid symmetric signature" $ do
+    Test.it test "succeeds with valid symmetric signature" $ do
       let byteString = Ascii.pack "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
       let signature = SymmetricSignature.MkSymmetricSignature $ Hash.hash ByteString.empty
-      SymmetricSignature.parse byteString @?= Right signature
+      Test.assertEq test (SymmetricSignature.parse byteString) (Right signature)
 
-  Tasty.describe "render" $ do
-    Tasty.it "renders symmetric signature correctly" $ do
+  Test.describe test "render" $ do
+    Test.it test "renders symmetric signature correctly" $ do
       let signature = SymmetricSignature.MkSymmetricSignature $ Hash.hash ByteString.empty
-      SymmetricSignature.render signature @?= Ascii.pack "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+      Test.assertEq test (SymmetricSignature.render signature) (Ascii.pack "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=")

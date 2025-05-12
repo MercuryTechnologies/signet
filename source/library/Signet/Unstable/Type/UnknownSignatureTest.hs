@@ -1,7 +1,7 @@
 module Signet.Unstable.Type.UnknownSignatureTest where
 
-import qualified Signet.Unstable.Extra.Tasty as Tasty
+import qualified Signet.Unstable.Type.Test as Test
 
-spec :: Tasty.Spec
-spec = Tasty.describe "Signet.Unstable.Type.UnknownSignature" $ do
+spec :: (Monad tree) => Test.Test tree -> tree ()
+spec test = Test.describe test "Signet.Unstable.Type.UnknownSignature" $ do
   pure ()

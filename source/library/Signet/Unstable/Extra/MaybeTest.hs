@@ -2,14 +2,13 @@ module Signet.Unstable.Extra.MaybeTest where
 
 import qualified Data.Void as Void
 import qualified Signet.Unstable.Extra.Maybe as Maybe
-import qualified Signet.Unstable.Extra.Tasty as Tasty
-import Test.Tasty.HUnit ((@?=))
+import qualified Signet.Unstable.Type.Test as Test
 
-spec :: Tasty.Spec
-spec = Tasty.describe "Signet.Unstable.Extra.Maybe" $ do
-  Tasty.describe "note" $ do
-    Tasty.it "works with nothing" $ do
-      Maybe.note () (Nothing :: Maybe Void.Void) @?= Left ()
+spec :: (Monad tree) => Test.Test tree -> tree ()
+spec test = Test.describe test "Signet.Unstable.Extra.Maybe" $ do
+  Test.describe test "note" $ do
+    Test.it test "works with nothing" $ do
+      Test.assertEq test (Maybe.note () (Nothing :: Maybe Void.Void)) (Left ())
 
-    Tasty.it "works with just" $ do
-      Maybe.note () (Just True) @?= Right True
+    Test.it test "works with just" $ do
+      Test.assertEq test (Maybe.note () (Just True)) (Right True)
