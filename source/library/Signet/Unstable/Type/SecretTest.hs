@@ -3,29 +3,28 @@ module Signet.Unstable.Type.SecretTest where
 import qualified Data.ByteArray as ByteArray
 import qualified Data.ByteString.Char8 as Ascii
 import qualified Signet.Unstable.Exception.InvalidSecret as InvalidSecret
-import qualified Signet.Unstable.Extra.Tasty as Tasty
 import qualified Signet.Unstable.Type.Secret as Secret
-import Test.Tasty.HUnit ((@?=))
+import qualified Signet.Unstable.Type.Test as Test
 
-spec :: Tasty.Spec
-spec = Tasty.describe "Signet.Unstable.Type.Secret" $ do
-  Tasty.describe "parse" $ do
-    Tasty.it "fails with invalid prefix" $ do
+spec :: (Monad tree) => Test.Test tree -> tree ()
+spec test = Test.describe test "Signet.Unstable.Type.Secret" $ do
+  Test.describe test "parse" $ do
+    Test.it test "fails with invalid prefix" $ do
       let byteString = Ascii.pack "invalid"
       let result = Secret.parse byteString
-      result @?= Left (InvalidSecret.MkInvalidSecret byteString)
+      Test.assertEq test result (Left (InvalidSecret.MkInvalidSecret byteString))
 
-    Tasty.it "fails with invalid input" $ do
+    Test.it test "fails with invalid input" $ do
       let byteString = Ascii.pack "whsec_invalid"
       let result = Secret.parse byteString
-      result @?= Left (InvalidSecret.MkInvalidSecret byteString)
+      Test.assertEq test result (Left (InvalidSecret.MkInvalidSecret byteString))
 
-    Tasty.it "succeeds with valid input" $ do
+    Test.it test "succeeds with valid input" $ do
       let result = Secret.parse $ Ascii.pack "whsec_MDEyMzQ1Njc4OQ=="
       let secret = Secret.MkSecret . ByteArray.convert $ Ascii.pack "0123456789"
-      result @?= Right secret
+      Test.assertEq test result (Right secret)
 
-  Tasty.describe "render" $ do
-    Tasty.it "works" $ do
+  Test.describe test "render" $ do
+    Test.it test "works" $ do
       let secret = Secret.MkSecret . ByteArray.convert $ Ascii.pack "0123456789"
-      Secret.render secret @?= Ascii.pack "whsec_MDEyMzQ1Njc4OQ=="
+      Test.assertEq test (Secret.render secret) (Ascii.pack "whsec_MDEyMzQ1Njc4OQ==")

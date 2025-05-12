@@ -3,26 +3,25 @@ module Signet.Unstable.Extra.EitherTest where
 import qualified Control.Monad.Catch as Exception
 import qualified Data.Void as Void
 import qualified Signet.Unstable.Extra.Either as Either
-import qualified Signet.Unstable.Extra.Tasty as Tasty
-import Test.Tasty.HUnit ((@?=))
+import qualified Signet.Unstable.Type.Test as Test
 
-spec :: Tasty.Spec
-spec = Tasty.describe "Signet.Unstable.Extra.Either" $ do
-  Tasty.describe "hush" $ do
-    Tasty.it "works with Left" $ do
-      Either.hush (Left () :: Either () Void.Void) @?= Nothing
+spec :: (Monad tree) => Test.Test tree -> tree ()
+spec test = Test.describe test "Signet.Unstable.Extra.Either" $ do
+  Test.describe test "hush" $ do
+    Test.it test "works with Left" $ do
+      Test.assertEq test (Either.hush (Left () :: Either () Void.Void)) Nothing
 
-    Tasty.it "works with Right" $ do
-      Either.hush (Right () :: Either Void.Void ()) @?= Just ()
+    Test.it test "works with Right" $ do
+      Test.assertEq test (Either.hush (Right () :: Either Void.Void ())) (Just ())
 
-  Tasty.describe "throw" $ do
-    Tasty.it "throws an exception for Left" $ do
+  Test.describe test "throw" $ do
+    Test.it test "throws an exception for Left" $ do
       result <- Exception.try . Either.throw $ Left MkTestException
-      result @?= (Left MkTestException :: Either TestException Void.Void)
+      Test.assertEq test result (Left MkTestException :: Either TestException Void.Void)
 
-    Tasty.it "returns the value for Right" $ do
+    Test.it test "returns the value for Right" $ do
       value <- Either.throw (Right () :: Either Void.Void ())
-      value @?= ()
+      Test.assertEq test value ()
 
 data TestException
   = MkTestException

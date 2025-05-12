@@ -32,6 +32,7 @@ common library
     -Wno-missing-deriving-strategies
     -Wno-missing-export-lists
     -Wno-missing-kind-signatures
+    -Wno-missing-role-annotations
     -Wno-missing-safe-haskell-mode
     -Wno-prepositive-qualified-module
     -Wno-safe
@@ -39,12 +40,6 @@ common library
 
   if flag(pedantic)
     ghc-options: -Werror
-
-common executable
-  import: library
-  ghc-options:
-    -rtsopts
-    -threaded
 
 library
   import: library
@@ -55,11 +50,8 @@ library
     exceptions ^>=0.10.7,
     http-types ^>=0.12.4,
     memory ^>=0.18.0,
-    tasty ^>=1.4 || ^>=1.5.3,
-    tasty-hunit ^>=0.10.2,
     text ^>=2.0 || ^>=2.1,
     time ^>=1.12.2,
-    transformers ^>=0.6.1.0,
 
   -- cabal-gild: discover source/library
   exposed-modules:
@@ -99,7 +91,6 @@ library
     Signet.Unstable.Extra.HttpTest
     Signet.Unstable.Extra.Maybe
     Signet.Unstable.Extra.MaybeTest
-    Signet.Unstable.Extra.Tasty
     Signet.Unstable.Type.AsymmetricSignature
     Signet.Unstable.Type.AsymmetricSignatureTest
     Signet.Unstable.Type.Id
@@ -122,6 +113,7 @@ library
     Signet.Unstable.Type.SignerTest
     Signet.Unstable.Type.SymmetricSignature
     Signet.Unstable.Type.SymmetricSignatureTest
+    Signet.Unstable.Type.Test
     Signet.Unstable.Type.Timestamp
     Signet.Unstable.Type.TimestampTest
     Signet.Unstable.Type.Tolerance
@@ -136,10 +128,16 @@ library
   hs-source-dirs: source/library
 
 test-suite signet-test-suite
-  import: executable
+  import: library
   build-depends:
     signet,
-    tasty,
+    tasty ^>=1.4 || ^>=1.5.3,
+    tasty-hunit ^>=0.10.2,
+    transformers ^>=0.6.1.0,
+
+  ghc-options:
+    -rtsopts
+    -threaded
 
   hs-source-dirs: source/test-suite
   main-is: Main.hs

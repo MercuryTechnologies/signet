@@ -3,19 +3,18 @@ module Signet.Unstable.Extra.HttpTest where
 import qualified Data.ByteString.Char8 as Ascii
 import qualified Data.CaseInsensitive as CI
 import qualified Signet.Unstable.Extra.Http as Http
-import qualified Signet.Unstable.Extra.Tasty as Tasty
-import Test.Tasty.HUnit ((@?=))
+import qualified Signet.Unstable.Type.Test as Test
 
-spec :: Tasty.Spec
-spec = Tasty.describe "Signet.Unstable.Extra.Http" $ do
-  Tasty.describe "hWebhookId" $ do
-    Tasty.it "creates the correct header name" $ do
-      Http.hWebhookId @?= CI.mk (Ascii.pack "webhook-id")
+spec :: (Monad tree) => Test.Test tree -> tree ()
+spec test = Test.describe test "Signet.Unstable.Extra.Http" $ do
+  Test.describe test "hWebhookId" $ do
+    Test.it test "creates the correct header name" $ do
+      Test.assertEq test Http.hWebhookId (CI.mk (Ascii.pack "webhook-id"))
 
-  Tasty.describe "hWebhookSignature" $ do
-    Tasty.it "creates the correct header name" $ do
-      Http.hWebhookSignature @?= CI.mk (Ascii.pack "webhook-signature")
+  Test.describe test "hWebhookSignature" $ do
+    Test.it test "creates the correct header name" $ do
+      Test.assertEq test Http.hWebhookSignature (CI.mk (Ascii.pack "webhook-signature"))
 
-  Tasty.describe "hWebhookTimestamp" $ do
-    Tasty.it "creates the correct header name" $ do
-      Http.hWebhookTimestamp @?= CI.mk (Ascii.pack "webhook-timestamp")
+  Test.describe test "hWebhookTimestamp" $ do
+    Test.it test "creates the correct header name" $ do
+      Test.assertEq test Http.hWebhookTimestamp (CI.mk (Ascii.pack "webhook-timestamp"))
