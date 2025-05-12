@@ -4,8 +4,8 @@ import qualified Crypto.Hash as Hash
 import qualified Data.ByteString as ByteString
 import qualified Data.ByteString.Char8 as Ascii
 import qualified Signet.Unstable.Exception.InvalidSymmetricSignature as InvalidSymmetricSignature
-import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.SymmetricSignature as SymmetricSignature
+import qualified Signet.Unstable.Type.Test as Test
 
 spec :: (Monad tree) => Test.Test tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Type.SymmetricSignature" $ do

@@ -24,13 +24,16 @@ spec test = Test.describe test "Signet.Unstable.Type.Message" $ do
       id_ <- Either.throw . Id.parse $ Ascii.pack "i"
       timestamp <- Either.throw . Timestamp.parse $ Ascii.pack "0"
       let payload = Payload.MkPayload $ Ascii.pack "p"
-      Test.assertEq test result
-        (Right
-          Message.MkMessage
-            { Message.id_ = id_,
-              Message.timestamp = timestamp,
-              Message.payload = payload
-            })
+      Test.assertEq
+        test
+        result
+        ( Right
+            Message.MkMessage
+              { Message.id_ = id_,
+                Message.timestamp = timestamp,
+                Message.payload = payload
+              }
+        )
 
   Test.describe test "render" $ do
     Test.it test "returns the correct ByteString representation" $ do

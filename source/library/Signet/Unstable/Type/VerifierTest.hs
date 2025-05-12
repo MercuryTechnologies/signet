@@ -4,7 +4,6 @@ import qualified Data.ByteString.Char8 as Ascii
 import qualified Signet.Unstable.Exception.InvalidVerifier as InvalidVerifier
 import qualified Signet.Unstable.Exception.VerificationException as VerificationException
 import qualified Signet.Unstable.Extra.Either as Either
-import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.AsymmetricSignature as AsymmetricSignature
 import qualified Signet.Unstable.Type.Message as Message
 import qualified Signet.Unstable.Type.PublicKey as PublicKey
@@ -12,8 +11,8 @@ import qualified Signet.Unstable.Type.Secret as Secret
 import qualified Signet.Unstable.Type.Signature as Signature
 import qualified Signet.Unstable.Type.Signatures as Signatures
 import qualified Signet.Unstable.Type.SymmetricSignature as SymmetricSignature
+import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.Verifier as Verifier
-
 
 spec :: (Monad tree) => Test.Test tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Type.Verifier" $ do

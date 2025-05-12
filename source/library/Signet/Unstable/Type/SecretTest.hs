@@ -3,8 +3,8 @@ module Signet.Unstable.Type.SecretTest where
 import qualified Data.ByteArray as ByteArray
 import qualified Data.ByteString.Char8 as Ascii
 import qualified Signet.Unstable.Exception.InvalidSecret as InvalidSecret
-import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.Secret as Secret
+import qualified Signet.Unstable.Type.Test as Test
 
 spec :: (Monad tree) => Test.Test tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Type.Secret" $ do
