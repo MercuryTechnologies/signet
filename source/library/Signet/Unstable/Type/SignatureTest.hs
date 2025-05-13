@@ -1,5 +1,6 @@
 module Signet.Unstable.Type.SignatureTest where
 
+import qualified Control.Monad.Catch as Exception
 import qualified Crypto.Error as Error
 import qualified Crypto.Hash as Hash
 import qualified Crypto.PubKey.Ed25519 as Ed25519
@@ -8,13 +9,14 @@ import qualified Data.ByteString.Char8 as Ascii
 import qualified Signet.Unstable.Exception.InvalidAsymmetricSignature as InvalidAsymmetricSignature
 import qualified Signet.Unstable.Exception.InvalidSignature as InvalidSignature
 import qualified Signet.Unstable.Exception.InvalidSymmetricSignature as InvalidSymmetricSignature
+import qualified Signet.Unstable.Exception.UnknownSignature as UnknownSignature
+import qualified Signet.Unstable.Extra.Either as Either
 import qualified Signet.Unstable.Type.AsymmetricSignature as AsymmetricSignature
 import qualified Signet.Unstable.Type.Signature as Signature
 import qualified Signet.Unstable.Type.SymmetricSignature as SymmetricSignature
 import qualified Signet.Unstable.Type.Test as Test
-import qualified Signet.Unstable.Type.UnknownSignature as UnknownSignature
 
-spec :: (Monad tree) => Test.Test tree -> tree ()
+spec :: (Exception.MonadThrow io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Type.Signature" $ do
   Test.describe test "parse" $ do
     Test.it test "fails with invalid asymmetric signature" $ do
@@ -34,7 +36,7 @@ spec test = Test.describe test "Signet.Unstable.Type.Signature" $ do
 
     Test.it test "succeeds with valid asymmetric signature" $ do
       let byteString = Ascii.pack "v1a,QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVotMDEyMzQ1Njc4OS1hYmNkZWZnaGlqa2xtbm9wcXJzdHV2cXh5eg=="
-      signature <- fmap (Signature.Asymmetric . AsymmetricSignature.MkAsymmetricSignature) . Error.throwCryptoErrorIO . Ed25519.signature $ Ascii.pack "ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789-abcdefghijklmnopqrstuvqxyz"
+      signature <- Either.throw . fmap (Signature.Asymmetric . AsymmetricSignature.MkAsymmetricSignature) . Error.eitherCryptoError . Ed25519.signature $ Ascii.pack "ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789-abcdefghijklmnopqrstuvqxyz"
       Test.assertEq test (Signature.parse byteString) (Right (Right signature))
 
     Test.it test "succeeds with valid symmetric signature" $ do
@@ -44,7 +46,7 @@ spec test = Test.describe test "Signet.Unstable.Type.Signature" $ do
 
   Test.describe test "render" $ do
     Test.it test "renders asymmetric signature correctly" $ do
-      signature <- fmap (Signature.Asymmetric . AsymmetricSignature.MkAsymmetricSignature) . Error.throwCryptoErrorIO . Ed25519.signature $ Ascii.pack "ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789-abcdefghijklmnopqrstuvqxyz"
+      signature <- Either.throw . fmap (Signature.Asymmetric . AsymmetricSignature.MkAsymmetricSignature) . Error.eitherCryptoError . Ed25519.signature $ Ascii.pack "ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789-abcdefghijklmnopqrstuvqxyz"
       Test.assertEq test (Signature.render signature) (Ascii.pack "v1a,QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVotMDEyMzQ1Njc4OS1hYmNkZWZnaGlqa2xtbm9wcXJzdHV2cXh5eg==")
 
     Test.it test "renders symmetric signature correctly" $ do

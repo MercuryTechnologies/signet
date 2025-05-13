@@ -1,5 +1,6 @@
 module SignetTest where
 
+import qualified Control.Monad.Catch as Exception
 import qualified Signet.Unstable.Exception.InvalidAsymmetricSignatureTest
 import qualified Signet.Unstable.Exception.InvalidIdTest
 import qualified Signet.Unstable.Exception.InvalidMessageTest
@@ -13,6 +14,7 @@ import qualified Signet.Unstable.Exception.InvalidTimestampTest
 import qualified Signet.Unstable.Exception.InvalidVerifierTest
 import qualified Signet.Unstable.Exception.SignetExceptionTest
 import qualified Signet.Unstable.Exception.ToleranceExceptionTest
+import qualified Signet.Unstable.Exception.UnknownSignatureTest
 import qualified Signet.Unstable.Exception.VerificationExceptionTest
 import qualified Signet.Unstable.Extra.EitherTest
 import qualified Signet.Unstable.Extra.HttpTest
@@ -31,11 +33,10 @@ import qualified Signet.Unstable.Type.SymmetricSignatureTest
 import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.TimestampTest
 import qualified Signet.Unstable.Type.ToleranceTest
-import qualified Signet.Unstable.Type.UnknownSignatureTest
 import qualified Signet.Unstable.Type.VerifierTest
 import qualified Signet.UnstableTest
 
-spec :: (Monad tree) => Test.Test tree -> tree ()
+spec :: (Exception.MonadCatch io, Monad tree) => Test.Test io tree -> tree ()
 spec test = do
   Signet.Unstable.Exception.InvalidAsymmetricSignatureTest.spec test
   Signet.Unstable.Exception.InvalidIdTest.spec test
@@ -67,6 +68,6 @@ spec test = do
   Signet.Unstable.Type.SymmetricSignatureTest.spec test
   Signet.Unstable.Type.TimestampTest.spec test
   Signet.Unstable.Type.ToleranceTest.spec test
-  Signet.Unstable.Type.UnknownSignatureTest.spec test
+  Signet.Unstable.Exception.UnknownSignatureTest.spec test
   Signet.Unstable.Type.VerifierTest.spec test
   Signet.UnstableTest.spec test

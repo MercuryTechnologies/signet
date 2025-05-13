@@ -5,9 +5,9 @@ import qualified Data.ByteString as ByteString
 import qualified Data.ByteString.Char8 as Ascii
 import qualified Data.Word as Word
 import qualified Signet.Unstable.Exception.InvalidSignature as InvalidSignature
+import qualified Signet.Unstable.Exception.UnknownSignature as UnknownSignature
 import qualified Signet.Unstable.Type.AsymmetricSignature as AsymmetricSignature
 import qualified Signet.Unstable.Type.SymmetricSignature as SymmetricSignature
-import qualified Signet.Unstable.Type.UnknownSignature as UnknownSignature
 
 data Signature
   = Asymmetric AsymmetricSignature.AsymmetricSignature

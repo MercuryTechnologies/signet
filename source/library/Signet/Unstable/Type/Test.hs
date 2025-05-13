@@ -3,18 +3,21 @@
 module Signet.Unstable.Type.Test where
 
 import qualified Control.Monad as Monad
-import qualified Data.Void as Void
 import qualified GHC.Stack as Stack
 
-data Test spec = MkTest
-  { assertFailure :: (Stack.HasCallStack) => String -> IO Void.Void,
-    describe :: String -> spec () -> spec (),
-    it :: String -> IO () -> spec ()
+data Test io tree = MkTest
+  { assertFailure :: forall void. (Stack.HasCallStack) => String -> io void,
+    describe :: String -> tree () -> tree (),
+    it :: String -> io () -> tree ()
   }
 
-assertEq :: (Stack.HasCallStack, Eq a, Show a) => Test tree -> a -> a -> IO ()
+assertEq ::
+  (Stack.HasCallStack, Applicative io, Eq a, Show a) =>
+  Test io tree ->
+  a ->
+  a ->
+  io ()
 assertEq test expected actual =
   Monad.when (expected /= actual)
-    . Monad.void
     . assertFailure test
     $ "expected " <> show expected <> " but got " <> show actual

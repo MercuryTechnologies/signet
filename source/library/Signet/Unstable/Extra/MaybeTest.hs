@@ -4,7 +4,7 @@ import qualified Data.Void as Void
 import qualified Signet.Unstable.Extra.Maybe as Maybe
 import qualified Signet.Unstable.Type.Test as Test
 
-spec :: (Monad tree) => Test.Test tree -> tree ()
+spec :: (Applicative io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Extra.Maybe" $ do
   Test.describe test "note" $ do
     Test.it test "works with nothing" $ do

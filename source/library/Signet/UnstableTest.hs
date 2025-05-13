@@ -1,5 +1,6 @@
 module Signet.UnstableTest where
 
+import qualified Control.Monad.Catch as Exception
 import qualified Data.ByteString.Char8 as Ascii
 import qualified Data.Time as Time
 import qualified Signet.Unstable as Signet
@@ -14,7 +15,7 @@ import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.Tolerance as Tolerance
 import qualified Signet.Unstable.Type.Verifier as Verifier
 
-spec :: (Monad tree) => Test.Test tree -> tree ()
+spec :: (Exception.MonadThrow io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable" $ do
   Test.describe test "verifyWebhookText" $ do
     pure ()
@@ -34,7 +35,7 @@ spec test = Test.describe test "Signet.Unstable" $ do
       let byteString = Ascii.pack "v1,IywpE5NXy+JdAScgR7j5Pt59GjmazD7iJuVsQoRZFyw="
       (_, signatures) <- Either.throw $ Signatures.parse byteString
       let result = Signet.verifyWebhookWith tolerance now verifier message signatures
-      Right signature <- Either.throw $ Signature.parse byteString
+      signature <- Either.throw =<< Either.throw (Signature.parse byteString)
       Test.assertEq test result (Right signature)
 
     Test.it test "fails with an invalid timestamp" $ do

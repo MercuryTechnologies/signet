@@ -1,5 +1,6 @@
 module Signet.Unstable.Type.SignaturesTest where
 
+import qualified Control.Monad.Catch as Exception
 import qualified Crypto.Error as Error
 import qualified Crypto.Hash as Hash
 import qualified Crypto.PubKey.Ed25519 as Ed25519
@@ -8,14 +9,15 @@ import qualified Data.ByteString.Char8 as Ascii
 import qualified Signet.Unstable.Exception.InvalidAsymmetricSignature as InvalidAsymmetricSignature
 import qualified Signet.Unstable.Exception.InvalidSignature as InvalidSignature
 import qualified Signet.Unstable.Exception.InvalidSymmetricSignature as InvalidSymmetricSignature
+import qualified Signet.Unstable.Exception.UnknownSignature as UnknownSignature
+import qualified Signet.Unstable.Extra.Either as Either
 import qualified Signet.Unstable.Type.AsymmetricSignature as AsymmetricSignature
 import qualified Signet.Unstable.Type.Signature as Signature
 import qualified Signet.Unstable.Type.Signatures as Signatures
 import qualified Signet.Unstable.Type.SymmetricSignature as SymmetricSignature
 import qualified Signet.Unstable.Type.Test as Test
-import qualified Signet.Unstable.Type.UnknownSignature as UnknownSignature
 
-spec :: (Monad tree) => Test.Test tree -> tree ()
+spec :: (Exception.MonadThrow io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Type.Signatures" $ do
   Test.describe test "parse" $ do
     Test.it test "succeeds with no signatures" $ do
@@ -28,7 +30,7 @@ spec test = Test.describe test "Signet.Unstable.Type.Signatures" $ do
 
     Test.it test "succeeds with many signatures" $ do
       let symmetricSignature = SymmetricSignature.MkSymmetricSignature $ Hash.hash ByteString.empty
-      asymmetricSignature <- fmap AsymmetricSignature.MkAsymmetricSignature . Error.throwCryptoErrorIO . Ed25519.signature $ Ascii.pack "ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789-abcdefghijklmnopqrstuvqxyz"
+      asymmetricSignature <- Either.throw . fmap AsymmetricSignature.MkAsymmetricSignature . Error.eitherCryptoError . Ed25519.signature $ Ascii.pack "ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789-abcdefghijklmnopqrstuvqxyz"
       let byteString = Ascii.pack "v1,47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU= v1a,QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVotMDEyMzQ1Njc4OS1hYmNkZWZnaGlqa2xtbm9wcXJzdHV2cXh5eg=="
       let signatures =
             Signatures.MkSignatures
@@ -62,7 +64,7 @@ spec test = Test.describe test "Signet.Unstable.Type.Signatures" $ do
 
     Test.it test "renders many signatures" $ do
       let symmetricSignature = SymmetricSignature.MkSymmetricSignature $ Hash.hash ByteString.empty
-      asymmetricSignature <- fmap AsymmetricSignature.MkAsymmetricSignature . Error.throwCryptoErrorIO . Ed25519.signature $ Ascii.pack "ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789-abcdefghijklmnopqrstuvqxyz"
+      asymmetricSignature <- Either.throw . fmap AsymmetricSignature.MkAsymmetricSignature . Error.eitherCryptoError . Ed25519.signature $ Ascii.pack "ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789-abcdefghijklmnopqrstuvqxyz"
       let signatures =
             Signatures.MkSignatures
               [ Signature.Symmetric symmetricSignature,

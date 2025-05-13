@@ -1,5 +1,6 @@
 module Signet.Unstable.Type.MessageTest where
 
+import qualified Control.Monad.Catch as Exception
 import qualified Data.ByteString.Char8 as Ascii
 import qualified Signet.Unstable.Exception.InvalidMessage as InvalidMessage
 import qualified Signet.Unstable.Exception.InvalidTimestamp as InvalidTimestamp
@@ -10,7 +11,7 @@ import qualified Signet.Unstable.Type.Payload as Payload
 import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.Timestamp as Timestamp
 
-spec :: (Monad tree) => Test.Test tree -> tree ()
+spec :: (Exception.MonadThrow io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Type.Message" $ do
   Test.describe test "parse" $ do
     Test.it test "fails with invalid timestamp" $ do

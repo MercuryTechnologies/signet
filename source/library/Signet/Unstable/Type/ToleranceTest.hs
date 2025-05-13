@@ -6,7 +6,7 @@ import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.Timestamp as Timestamp
 import qualified Signet.Unstable.Type.Tolerance as Tolerance
 
-spec :: (Monad tree) => Test.Test tree -> tree ()
+spec :: (Applicative io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Type.Tolerance" $ do
   Test.describe test "check" $ do
     Test.it test "succeeds when timestamp is within tolerance" $ do
