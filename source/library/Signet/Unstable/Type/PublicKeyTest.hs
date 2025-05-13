@@ -1,13 +1,15 @@
 module Signet.Unstable.Type.PublicKeyTest where
 
+import qualified Control.Monad.Catch as Exception
 import qualified Crypto.Error as Error
 import qualified Crypto.PubKey.Ed25519 as Ed25519
 import qualified Data.ByteString.Char8 as Ascii
 import qualified Signet.Unstable.Exception.InvalidPublicKey as InvalidPublicKey
+import qualified Signet.Unstable.Extra.Either as Either
 import qualified Signet.Unstable.Type.PublicKey as PublicKey
 import qualified Signet.Unstable.Type.Test as Test
 
-spec :: (Monad tree) => Test.Test tree -> tree ()
+spec :: (Exception.MonadThrow io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Type.PublicKey" $ do
   Test.describe test "parse" $ do
     Test.it test "fails with invalid prefix" $ do
@@ -22,10 +24,10 @@ spec test = Test.describe test "Signet.Unstable.Type.PublicKey" $ do
 
     Test.it test "succeeds with valid input" $ do
       let result = PublicKey.parse $ Ascii.pack "whpk_QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzNDU="
-      publicKey <- fmap PublicKey.MkPublicKey . Error.throwCryptoErrorIO . Ed25519.publicKey $ Ascii.pack "ABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+      publicKey <- Either.throw . fmap PublicKey.MkPublicKey . Error.eitherCryptoError . Ed25519.publicKey $ Ascii.pack "ABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
       Test.assertEq test result (Right publicKey)
 
   Test.describe test "render" $ do
     Test.it test "works" $ do
-      publicKey <- fmap PublicKey.MkPublicKey . Error.throwCryptoErrorIO . Ed25519.publicKey $ Ascii.pack "ABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
+      publicKey <- Either.throw . fmap PublicKey.MkPublicKey . Error.eitherCryptoError . Ed25519.publicKey $ Ascii.pack "ABCDEFGHIJKLMNOPQRSTUVWXYZ012345"
       Test.assertEq test (PublicKey.render publicKey) (Ascii.pack "whpk_QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzNDU=")

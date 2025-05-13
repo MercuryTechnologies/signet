@@ -4,8 +4,8 @@ import qualified Data.ByteString as ByteString
 import qualified Data.Either as Either
 import qualified Data.Word as Word
 import qualified Signet.Unstable.Exception.InvalidSignature as InvalidSignature
+import qualified Signet.Unstable.Exception.UnknownSignature as UnknownSignature
 import qualified Signet.Unstable.Type.Signature as Signature
-import qualified Signet.Unstable.Type.UnknownSignature as UnknownSignature
 
 newtype Signatures
   = MkSignatures [Signature.Signature]

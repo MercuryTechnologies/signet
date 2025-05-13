@@ -16,6 +16,7 @@ import qualified Signet.Unstable.Exception.InvalidSigner as InvalidSigner
 import qualified Signet.Unstable.Exception.InvalidTimestamp as InvalidTimestamp
 import qualified Signet.Unstable.Exception.InvalidVerifier as InvalidVerifier
 import qualified Signet.Unstable.Exception.SignetException as SignetException
+import qualified Signet.Unstable.Exception.UnknownSignature as UnknownSignature
 import qualified Signet.Unstable.Extra.Either as Either
 import qualified Signet.Unstable.Type.AsymmetricSignature as AsymmetricSignature
 import qualified Signet.Unstable.Type.Id as Id
@@ -30,7 +31,6 @@ import qualified Signet.Unstable.Type.Signer as Signer
 import qualified Signet.Unstable.Type.SymmetricSignature as SymmetricSignature
 import qualified Signet.Unstable.Type.Timestamp as Timestamp
 import qualified Signet.Unstable.Type.Tolerance as Tolerance
-import qualified Signet.Unstable.Type.UnknownSignature as UnknownSignature
 import qualified Signet.Unstable.Type.Verifier as Verifier
 
 -- | Verifies a webhook with 'Text.Text' values. This is a wrapper around

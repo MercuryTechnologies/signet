@@ -7,7 +7,7 @@ import qualified Signet.Unstable.Exception.InvalidSymmetricSignature as InvalidS
 import qualified Signet.Unstable.Type.SymmetricSignature as SymmetricSignature
 import qualified Signet.Unstable.Type.Test as Test
 
-spec :: (Monad tree) => Test.Test tree -> tree ()
+spec :: (Applicative io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Type.SymmetricSignature" $ do
   Test.describe test "parse" $ do
     Test.it test "fails with invalid symmetric signature" $ do

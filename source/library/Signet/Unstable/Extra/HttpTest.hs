@@ -5,7 +5,7 @@ import qualified Data.CaseInsensitive as CI
 import qualified Signet.Unstable.Extra.Http as Http
 import qualified Signet.Unstable.Type.Test as Test
 
-spec :: (Monad tree) => Test.Test tree -> tree ()
+spec :: (Applicative io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Extra.Http" $ do
   Test.describe test "hWebhookId" $ do
     Test.it test "creates the correct header name" $ do

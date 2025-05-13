@@ -5,7 +5,7 @@ import qualified Data.Void as Void
 import qualified Signet.Unstable.Extra.Either as Either
 import qualified Signet.Unstable.Type.Test as Test
 
-spec :: (Monad tree) => Test.Test tree -> tree ()
+spec :: (Exception.MonadCatch io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Extra.Either" $ do
   Test.describe test "hush" $ do
     Test.it test "works with Left" $ do

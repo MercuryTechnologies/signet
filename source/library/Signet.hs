@@ -33,7 +33,6 @@ module Signet
     Signet.Unstable.parseTimestamp,
     Signet.Unstable.Type.Tolerance.Tolerance (..),
     Signet.Unstable.typicalTolerance,
-    Signet.Unstable.Type.UnknownSignature.UnknownSignature (..),
     Signet.Unstable.Type.Verifier.Verifier (Signet.Unstable.AsymmetricVerifier, Signet.Unstable.SymmetricVerifier),
     Signet.Unstable.parseVerifier,
 
@@ -51,6 +50,7 @@ module Signet
     Signet.Unstable.Exception.InvalidVerifier.InvalidVerifier (..),
     Signet.Unstable.Exception.SignetException.SignetException (..),
     Signet.Unstable.Exception.ToleranceException.ToleranceException (..),
+    Signet.Unstable.Exception.UnknownSignature.UnknownSignature (..),
     Signet.Unstable.Exception.VerificationException.VerificationException (..),
   )
 where
@@ -69,6 +69,7 @@ import qualified Signet.Unstable.Exception.InvalidTimestamp
 import qualified Signet.Unstable.Exception.InvalidVerifier
 import qualified Signet.Unstable.Exception.SignetException
 import qualified Signet.Unstable.Exception.ToleranceException
+import qualified Signet.Unstable.Exception.UnknownSignature
 import qualified Signet.Unstable.Exception.VerificationException
 import qualified Signet.Unstable.Extra.Http
 import qualified Signet.Unstable.Type.AsymmetricSignature
@@ -84,5 +85,4 @@ import qualified Signet.Unstable.Type.Signer
 import qualified Signet.Unstable.Type.SymmetricSignature
 import qualified Signet.Unstable.Type.Timestamp
 import qualified Signet.Unstable.Type.Tolerance
-import qualified Signet.Unstable.Type.UnknownSignature
 import qualified Signet.Unstable.Type.Verifier

@@ -83,6 +83,8 @@ library
     Signet.Unstable.Exception.SignetExceptionTest
     Signet.Unstable.Exception.ToleranceException
     Signet.Unstable.Exception.ToleranceExceptionTest
+    Signet.Unstable.Exception.UnknownSignature
+    Signet.Unstable.Exception.UnknownSignatureTest
     Signet.Unstable.Exception.VerificationException
     Signet.Unstable.Exception.VerificationExceptionTest
     Signet.Unstable.Extra.Either
@@ -118,8 +120,6 @@ library
     Signet.Unstable.Type.TimestampTest
     Signet.Unstable.Type.Tolerance
     Signet.Unstable.Type.ToleranceTest
-    Signet.Unstable.Type.UnknownSignature
-    Signet.Unstable.Type.UnknownSignatureTest
     Signet.Unstable.Type.Verifier
     Signet.Unstable.Type.VerifierTest
     Signet.UnstableTest

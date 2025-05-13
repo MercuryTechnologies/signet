@@ -6,7 +6,7 @@ import qualified Signet.Unstable.Exception.InvalidSecret as InvalidSecret
 import qualified Signet.Unstable.Type.Secret as Secret
 import qualified Signet.Unstable.Type.Test as Test
 
-spec :: (Monad tree) => Test.Test tree -> tree ()
+spec :: (Applicative io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Type.Secret" $ do
   Test.describe test "parse" $ do
     Test.it test "fails with invalid prefix" $ do

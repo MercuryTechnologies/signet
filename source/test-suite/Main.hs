@@ -10,7 +10,7 @@ main = Tasty.defaultMain testTree
 testTree :: Tasty.TestTree
 testTree = Tasty.testGroup "signet" . Writer.execWriter $ SignetTest.spec tasty
 
-tasty :: Test.Test (Writer.Writer [Tasty.TestTree])
+tasty :: Test.Test IO (Writer.Writer [Tasty.TestTree])
 tasty =
   Test.MkTest
     { Test.assertFailure = Unit.assertFailure,
