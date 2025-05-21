@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: tfausak/cabal-gild-setup-action@v2
-      - run: cabal-gild --input signet.cabal --mode check
+      - run: cabal-gild --input *.cabal --mode check
   hlint:
     name: HLint
     runs-on: ubuntu-latest
@@ -79,11 +79,11 @@ jobs:
       - run: cabal build --only-download
       - run: cabal build --only-dependencies
       - run: cabal build
-      - run: cp dist-newstyle/signet-*-docs.tar.gz artifact
+      - run: cp dist-newstyle/*-docs.tar.gz artifact
       - run: tar --create --file artifact.tar --verbose artifact
       - uses: actions/upload-artifact@v4
         with:
-          name: signet-${{ github.sha }}-${{ matrix.os }}-${{ matrix.ghc }}
+          name: ${{ github.sha }}-${{ matrix.os }}-${{ matrix.ghc }}
           path: artifact.tar
       - run: cabal run -- signet-test-suite
   release:
@@ -95,11 +95,13 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: signet-${{ github.sha }}-ubuntu-latest-9.12
+          name: ${{ github.sha }}-ubuntu-latest-9.12
       - run: tar --extract --file artifact.tar --verbose
       - if: ${{ github.event_name == 'release' }}
         uses: softprops/action-gh-release@v2
         with:
-          files: artifact/signet-*.tar.gz
-      - run: cabal upload ${{ github.event_name == 'release' && '--publish' || '' }} --token '${{ secrets.HACKAGE_TOKEN }}' artifact/signet-*.tar.gz
-      - run: cabal --http-transport=plain-http upload --documentation ${{ github.event_name == 'release' && '--publish' || '' }} --token '${{ secrets.HACKAGE_TOKEN }}' artifact/signet-*-docs.tar.gz
+          files: artifact/*.tar.gz
+      - run: echo PUBLISH=${{ github.event_name == 'release' && '--publish' || '' }} >> $GITHUB_ENV
+      - run: echo VERSION=$( grep '^version:' *.cabal | cut -d ' ' -f 2 ) >> $GITHUB_ENV
+      - run: cabal upload $PUBLISH --token '${{ secrets.HACKAGE_TOKEN }}' artifact/*-$VERSION.tar.gz
+      - run: cabal --http-transport=plain-http upload --documentation $PUBLISH --token '${{ secrets.HACKAGE_TOKEN }}' artifact/*-$VERSION-docs.tar.gz
