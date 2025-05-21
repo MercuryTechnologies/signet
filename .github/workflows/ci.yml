@@ -63,7 +63,7 @@ jobs:
           cabal: latest
       - run: ghc-pkg list
       - run: cabal sdist --output-dir artifact
-      - run: cabal configure --enable-tests --flags=pedantic --jobs
+      - run: cabal configure --enable-documentation --enable-tests --flags=pedantic --haddock-for-hackage --jobs
       - run: cat cabal.project.local
       - run: cp cabal.project.local artifact
       - run: cabal update
@@ -79,6 +79,7 @@ jobs:
       - run: cabal build --only-download
       - run: cabal build --only-dependencies
       - run: cabal build
+      - run: cp dist-newstyle/signet-*-docs.tar.gz artifact
       - run: tar --create --file artifact.tar --verbose artifact
       - uses: actions/upload-artifact@v4
         with:
@@ -86,7 +87,6 @@ jobs:
           path: artifact.tar
       - run: cabal run -- signet-test-suite
   release:
-    if: ${{ github.event_name == 'release' }}
     name: Release
     needs: build
     permissions:
@@ -97,7 +97,9 @@ jobs:
         with:
           name: signet-${{ github.sha }}-ubuntu-latest-9.12
       - run: tar --extract --file artifact.tar --verbose
-      - uses: softprops/action-gh-release@v2
+      - if: ${{ github.event_name == 'release' }}
+        uses: softprops/action-gh-release@v2
         with:
-          files: artifact/signet-${{ github.event.release.tag_name }}.tar.gz
-      - run: cabal upload --publish --token '${{ secrets.HACKAGE_TOKEN }}' artifact/signet-${{ github.event.release.tag_name }}.tar.gz
+          files: artifact/signet-*.tar.gz
+      - run: cabal upload ${{ github.event_name == 'release' && '--publish' || '' }} --token '${{ secrets.HACKAGE_TOKEN }}' artifact/signet-*.tar.gz
+      - run: cabal --http-transport=plain-http upload --documentation ${{ github.event_name == 'release' && '--publish' || '' }} --token '${{ secrets.HACKAGE_TOKEN }}' artifact/signet-*-docs.tar.gz
