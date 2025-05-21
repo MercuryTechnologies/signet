@@ -14,8 +14,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: "echo name=$( grep '^name: ' *.cabal | cut -d ' ' -f 2 ) >> $GITHUB_OUTPUT"
-      - run: "echo version=$( grep '^version:' *.cabal | cut -d ' ' -f 2 ) >> $GITHUB_OUTPUT"
+      - run: "grep '^name: ' *.cabal | cut -d ' ' -f 2"
+      - id: name
+        run: "echo name=$( grep '^name: ' *.cabal | cut -d ' ' -f 2 ) >> $GITHUB_OUTPUT"
+      - run: "grep '^version:' *.cabal | cut -d ' ' -f 2"
+      - id: version
+        run: "echo version=$( grep '^version:' *.cabal | cut -d ' ' -f 2 ) >> $GITHUB_OUTPUT"
+    outputs:
+      name: ${{ steps.name.outputs.name }}
+      version: ${{ steps.version.outputs.version }}
   cabal:
     name: Cabal
     runs-on: ubuntu-latest
