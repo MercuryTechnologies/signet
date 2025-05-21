@@ -14,10 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: "grep '^name: ' *.cabal | cut -d ' ' -f 2"
       - id: name
         run: "echo name=$( grep '^name: ' *.cabal | cut -d ' ' -f 2 ) >> $GITHUB_OUTPUT"
-      - run: "grep '^version:' *.cabal | cut -d ' ' -f 2"
       - id: version
         run: "echo version=$( grep '^version:' *.cabal | cut -d ' ' -f 2 ) >> $GITHUB_OUTPUT"
     outputs:
@@ -59,16 +57,16 @@ jobs:
     strategy:
       matrix:
         include:
-          # - ghc: 9.12
-          #   os: macos-latest
-          # - ghc: 9.8
-          #   os: ubuntu-latest
-          # - ghc: '9.10'
-          #   os: ubuntu-latest
+          - ghc: 9.12
+            os: macos-latest
+          - ghc: 9.8
+            os: ubuntu-latest
+          - ghc: '9.10'
+            os: ubuntu-latest
           - ghc: 9.12
             os: ubuntu-latest
-          # - ghc: 9.12
-          #   os: windows-latest
+          - ghc: 9.12
+            os: windows-latest
     steps:
       - uses: actions/checkout@v4
       - run: mkdir artifact
