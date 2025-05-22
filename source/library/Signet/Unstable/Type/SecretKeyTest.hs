@@ -4,10 +4,10 @@ import qualified Control.Monad.Catch as Exception
 import qualified Crypto.Error as Error
 import qualified Crypto.PubKey.Ed25519 as Ed25519
 import qualified Data.ByteString.Char8 as Ascii
+import qualified Heck as Test
 import qualified Signet.Unstable.Exception.InvalidSecretKey as InvalidSecretKey
 import qualified Signet.Unstable.Extra.Either as Either
 import qualified Signet.Unstable.Type.SecretKey as SecretKey
-import qualified Signet.Unstable.Type.Test as Test
 
 spec :: (Exception.MonadThrow io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Type.SecretKey" $ do

@@ -22,7 +22,10 @@ flag pedantic
   manual: True
 
 common library
-  build-depends: base ^>=4.19 || ^>=4.20 || ^>=4.21
+  build-depends:
+    base ^>=4.19 || ^>=4.20 || ^>=4.21,
+    heck ^>=0.2025.5.22,
+
   default-language: Haskell2010
   ghc-options:
     -Weverything
@@ -115,7 +118,6 @@ library
     Signet.Unstable.Type.SignerTest
     Signet.Unstable.Type.SymmetricSignature
     Signet.Unstable.Type.SymmetricSignatureTest
-    Signet.Unstable.Type.Test
     Signet.Unstable.Type.Timestamp
     Signet.Unstable.Type.TimestampTest
     Signet.Unstable.Type.Tolerance

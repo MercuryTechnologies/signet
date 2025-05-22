@@ -3,9 +3,9 @@ module Signet.Unstable.Type.TimestampTest where
 import qualified Control.Monad.Catch as Exception
 import qualified Data.ByteString.Char8 as Ascii
 import qualified Data.Time as Time
+import qualified Heck as Test
 import qualified Signet.Unstable.Exception.InvalidTimestamp as InvalidTimestamp
 import qualified Signet.Unstable.Extra.Either as Either
-import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.Timestamp as Timestamp
 
 spec :: (Exception.MonadThrow io, Monad tree) => Test.Test io tree -> tree ()

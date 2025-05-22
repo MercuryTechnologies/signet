@@ -1,6 +1,7 @@
 module SignetTest where
 
 import qualified Control.Monad.Catch as Exception
+import qualified Heck as Test
 import qualified Signet.Unstable.Exception.InvalidAsymmetricSignatureTest
 import qualified Signet.Unstable.Exception.InvalidIdTest
 import qualified Signet.Unstable.Exception.InvalidMessageTest
@@ -30,7 +31,6 @@ import qualified Signet.Unstable.Type.SignatureTest
 import qualified Signet.Unstable.Type.SignaturesTest
 import qualified Signet.Unstable.Type.SignerTest
 import qualified Signet.Unstable.Type.SymmetricSignatureTest
-import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.TimestampTest
 import qualified Signet.Unstable.Type.ToleranceTest
 import qualified Signet.Unstable.Type.VerifierTest

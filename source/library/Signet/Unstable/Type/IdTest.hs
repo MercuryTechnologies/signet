@@ -1,9 +1,9 @@
 module Signet.Unstable.Type.IdTest where
 
 import qualified Data.ByteString.Char8 as Ascii
+import qualified Heck as Test
 import qualified Signet.Unstable.Exception.InvalidId as InvalidId
 import qualified Signet.Unstable.Type.Id as Id
-import qualified Signet.Unstable.Type.Test as Test
 
 spec :: (Applicative io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Type.Id" $ do

@@ -2,6 +2,7 @@ module Signet.Unstable.Type.VerifierTest where
 
 import qualified Control.Monad.Catch as Exception
 import qualified Data.ByteString.Char8 as Ascii
+import qualified Heck as Test
 import qualified Signet.Unstable.Exception.InvalidVerifier as InvalidVerifier
 import qualified Signet.Unstable.Exception.VerificationException as VerificationException
 import qualified Signet.Unstable.Extra.Either as Either
@@ -12,7 +13,6 @@ import qualified Signet.Unstable.Type.Secret as Secret
 import qualified Signet.Unstable.Type.Signature as Signature
 import qualified Signet.Unstable.Type.Signatures as Signatures
 import qualified Signet.Unstable.Type.SymmetricSignature as SymmetricSignature
-import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.Verifier as Verifier
 
 spec :: (Exception.MonadThrow io, Monad tree) => Test.Test io tree -> tree ()

@@ -2,6 +2,7 @@ module Signet.Unstable.Type.SignerTest where
 
 import qualified Control.Monad.Catch as Exception
 import qualified Data.ByteString.Char8 as Ascii
+import qualified Heck as Test
 import qualified Signet.Unstable.Exception.InvalidSigner as InvalidSigner
 import qualified Signet.Unstable.Extra.Either as Either
 import qualified Signet.Unstable.Type.AsymmetricSignature as AsymmetricSignature
@@ -11,7 +12,6 @@ import qualified Signet.Unstable.Type.SecretKey as SecretKey
 import qualified Signet.Unstable.Type.Signature as Signature
 import qualified Signet.Unstable.Type.Signer as Signer
 import qualified Signet.Unstable.Type.SymmetricSignature as SymmetricSignature
-import qualified Signet.Unstable.Type.Test as Test
 
 spec :: (Exception.MonadThrow io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Type.Signer" $ do
