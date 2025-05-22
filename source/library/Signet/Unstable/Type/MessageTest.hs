@@ -2,13 +2,13 @@ module Signet.Unstable.Type.MessageTest where
 
 import qualified Control.Monad.Catch as Exception
 import qualified Data.ByteString.Char8 as Ascii
+import qualified Heck as Test
 import qualified Signet.Unstable.Exception.InvalidMessage as InvalidMessage
 import qualified Signet.Unstable.Exception.InvalidTimestamp as InvalidTimestamp
 import qualified Signet.Unstable.Extra.Either as Either
 import qualified Signet.Unstable.Type.Id as Id
 import qualified Signet.Unstable.Type.Message as Message
 import qualified Signet.Unstable.Type.Payload as Payload
-import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.Timestamp as Timestamp
 
 spec :: (Exception.MonadThrow io, Monad tree) => Test.Test io tree -> tree ()

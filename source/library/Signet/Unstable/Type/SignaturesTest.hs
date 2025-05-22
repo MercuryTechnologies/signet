@@ -6,6 +6,7 @@ import qualified Crypto.Hash as Hash
 import qualified Crypto.PubKey.Ed25519 as Ed25519
 import qualified Data.ByteString as ByteString
 import qualified Data.ByteString.Char8 as Ascii
+import qualified Heck as Test
 import qualified Signet.Unstable.Exception.InvalidAsymmetricSignature as InvalidAsymmetricSignature
 import qualified Signet.Unstable.Exception.InvalidSignature as InvalidSignature
 import qualified Signet.Unstable.Exception.InvalidSymmetricSignature as InvalidSymmetricSignature
@@ -15,7 +16,6 @@ import qualified Signet.Unstable.Type.AsymmetricSignature as AsymmetricSignature
 import qualified Signet.Unstable.Type.Signature as Signature
 import qualified Signet.Unstable.Type.Signatures as Signatures
 import qualified Signet.Unstable.Type.SymmetricSignature as SymmetricSignature
-import qualified Signet.Unstable.Type.Test as Test
 
 spec :: (Exception.MonadThrow io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Type.Signatures" $ do

@@ -3,6 +3,7 @@ module Signet.UnstableTest where
 import qualified Control.Monad.Catch as Exception
 import qualified Data.ByteString.Char8 as Ascii
 import qualified Data.Time as Time
+import qualified Heck as Test
 import qualified Signet.Unstable as Signet
 import qualified Signet.Unstable.Exception.SignetException as SignetException
 import qualified Signet.Unstable.Exception.ToleranceException as ToleranceException
@@ -11,7 +12,6 @@ import qualified Signet.Unstable.Extra.Either as Either
 import qualified Signet.Unstable.Type.Message as Message
 import qualified Signet.Unstable.Type.Signature as Signature
 import qualified Signet.Unstable.Type.Signatures as Signatures
-import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.Tolerance as Tolerance
 import qualified Signet.Unstable.Type.Verifier as Verifier
 

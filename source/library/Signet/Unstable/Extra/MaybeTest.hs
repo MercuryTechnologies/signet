@@ -1,8 +1,8 @@
 module Signet.Unstable.Extra.MaybeTest where
 
 import qualified Data.Void as Void
+import qualified Heck as Test
 import qualified Signet.Unstable.Extra.Maybe as Maybe
-import qualified Signet.Unstable.Type.Test as Test
 
 spec :: (Applicative io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Extra.Maybe" $ do
