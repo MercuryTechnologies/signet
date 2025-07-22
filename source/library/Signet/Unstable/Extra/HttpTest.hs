@@ -2,8 +2,8 @@ module Signet.Unstable.Extra.HttpTest where
 
 import qualified Data.ByteString.Char8 as Ascii
 import qualified Data.CaseInsensitive as CI
+import qualified Heck as Test
 import qualified Signet.Unstable.Extra.Http as Http
-import qualified Signet.Unstable.Type.Test as Test
 
 spec :: (Applicative io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Extra.Http" $ do

@@ -1,8 +1,8 @@
 module Signet.Unstable.Type.ToleranceTest where
 
 import qualified Data.Time as Time
+import qualified Heck as Test
 import qualified Signet.Unstable.Exception.ToleranceException as ToleranceException
-import qualified Signet.Unstable.Type.Test as Test
 import qualified Signet.Unstable.Type.Timestamp as Timestamp
 import qualified Signet.Unstable.Type.Tolerance as Tolerance
 

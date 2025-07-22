@@ -2,8 +2,8 @@ module Signet.Unstable.Extra.EitherTest where
 
 import qualified Control.Monad.Catch as Exception
 import qualified Data.Void as Void
+import qualified Heck as Test
 import qualified Signet.Unstable.Extra.Either as Either
-import qualified Signet.Unstable.Type.Test as Test
 
 spec :: (Exception.MonadCatch io, Monad tree) => Test.Test io tree -> tree ()
 spec test = Test.describe test "Signet.Unstable.Extra.Either" $ do
