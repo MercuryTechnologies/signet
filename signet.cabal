@@ -1,6 +1,6 @@
 cabal-version: 3.0
 name: signet
-version: 0.2025.5.21
+version: 1.0.0.0
 synopsis: Standard Webhooks
 description:
   Signet is a Haskell library for working with Standard Webhooks.
