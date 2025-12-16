@@ -84,7 +84,7 @@ jobs:
       - run: cat cabal.project.freeze
       - run: cp cabal.project.freeze artifact
       - run: cabal outdated --v2-freeze-file
-      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+      - uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           key: ${{ matrix.os }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
           path: ~/.local/state/cabal
