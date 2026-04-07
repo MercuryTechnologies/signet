@@ -111,9 +111,9 @@ library
     Signet.Unstable.Type.SecretKeyTest
     Signet.Unstable.Type.SecretTest
     Signet.Unstable.Type.Signature
-    Signet.Unstable.Type.SignatureTest
     Signet.Unstable.Type.Signatures
     Signet.Unstable.Type.SignaturesTest
+    Signet.Unstable.Type.SignatureTest
     Signet.Unstable.Type.Signer
     Signet.Unstable.Type.SignerTest
     Signet.Unstable.Type.SymmetricSignature
