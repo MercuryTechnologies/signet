@@ -13,7 +13,7 @@ jobs:
   meta:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - id: name
         run: "echo name=$( grep '^name: ' *.cabal | cut -d ' ' -f 2 ) >> $GITHUB_OUTPUT"
       - id: version
@@ -25,21 +25,21 @@ jobs:
     name: Cabal
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - run: cabal check
   gild:
     name: Gild
     needs: meta
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - uses: tfausak/cabal-gild-setup-action@2ae75deca09ec4fb5231a240a248044b93926f80 # v2
       - run: cabal-gild --input ${{ needs.meta.outputs.name }}.cabal --mode check
   hlint:
     name: HLint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - uses: haskell-actions/hlint-setup@fe9cd1cd1af94a23900c06738e73f6ddb092966a # v2.4.10
       - uses: haskell-actions/hlint-run@eaca4cfbf4a69f4eb875df38b6bc3e1657020378 # v2.4.10
         with:
@@ -48,7 +48,7 @@ jobs:
     name: Ormolu
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - uses: haskell-actions/run-ormolu@c5eec49879ee294be01c787bcbf7b5a373a37060 # v17
   build:
     name: GHC ${{ matrix.ghc }} on ${{ matrix.os }}
@@ -68,7 +68,7 @@ jobs:
           - ghc: 9.12
             os: windows-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - run: mkdir artifact
       - uses: haskell/ghcup-setup@269e121e9e7528761aca5a606a53fe9d04cd6658 # v1.2.3
         with:
