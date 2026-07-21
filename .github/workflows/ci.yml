@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - uses: tfausak/cabal-gild-setup-action@9346a7ac483c2817918b37d1c98d6f053c104362 # v2
+      - uses: tfausak/cabal-gild-setup-action@291d8727a37d428b811886cda15fd06776f3ac7c # v2
       - run: cabal-gild --input ${{ needs.meta.outputs.name }}.cabal --mode check
   hlint:
     name: HLint
