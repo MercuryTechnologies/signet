@@ -98,7 +98,7 @@ jobs:
         with:
           name: ${{ github.sha }}-${{ matrix.os }}-${{ matrix.ghc }}
           path: artifact.tar
-      - run: cabal run -- signet-test-suite
+      - run: cabal run signet-test-suite
   release:
     name: Release
     needs:
